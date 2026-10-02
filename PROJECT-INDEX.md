@@ -7,7 +7,7 @@ Single entry point for project status, decisions and documents. Update this file
 - **Phase:** 6 — Development (Foundation)
 - **Sprint:** sprint-0
 - **Status:** Foundation complete
-- **Last updated:** 2026-10-02 (previews use normal font scale only; pairing, sign-in, and select-role UI)
+- **Last updated:** 2026-10-02 (checkout UI is local-only: open orders, order builder, modifiers, tender, gift card, draft saved, delivery address, orders with modifier details, confirmation)
 
 ## Plan progress
 
