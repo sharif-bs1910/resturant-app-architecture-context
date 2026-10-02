@@ -19,7 +19,7 @@ Business domain details are **not defined yet** and will be supplied later.
 - Dark mode and languages other than English (product decision for foundation; strings still live in resources so translation stays possible).
 - A multi-module Gradle structure (single `:app` module with strict package layering instead).
 - Git remotes and CI (managed by the team outside this setup).
-- Final brand tokens (Figma values arrive later, see PDR-002).
+- Status colours and unmapped spacing (PDR-002). Mapped Noshi Brand Library v1.0 colours, type, and radius are applied.
 
 ## Users
 
@@ -61,7 +61,7 @@ The foundation is done when all of the following hold (spec section 11):
 
 1. `./gradlew assembleDevDebug assembleStagingDebug assembleProdRelease` succeeds without any `google-services.json`.
 2. `./gradlew ktlintCheck testDevDebugUnitTest` passes (detekt deferred — PDR-005).
-3. Every component and screen file has previews covering its variants (tablet landscape, tablet portrait, font scale 2.0).
+3. Every component and screen file has previews covering its variants (tablet landscape and tablet portrait at normal font scale).
 4. No hardcoded colors, dp/sp values or user-facing strings outside token and resource files; `scripts/ai-hooks/design-lint-check.sh app/src/main` reports nothing.
 5. `SPECIFICATION.md`, `modules/FOUND.md` and `sprints/sprint-0.md` trace all 20 FR IDs to tickets, code and tests; `PROJECT-INDEX.md` shows the foundation complete with the remaining PDRs open.
 6. Each hook has been triggered at least once in Cursor (secrets guard blocks reading `local.properties`; format and design lint run on edit; session-start and stop fire), with results recorded in [TEST-CONTEXT.md](../06-development/TEST-CONTEXT.md).
