@@ -50,7 +50,7 @@ Non-secret values live in `config/env/{dev,staging,prod}.properties`; secrets co
 |---|---|
 | Backend API | Not defined. Auth scheme open (PDR-001); base URLs are `.invalid` placeholders (PDR-003). Placeholder endpoint only: `api:auth:refresh` in [API-REGISTRY.md](API-REGISTRY.md). |
 | Firebase Crashlytics | One project per environment expected (PDR-004). Until `app/src/<flavor>/google-services.json` exists, Firebase plugins are skipped and `NoOpCrashReporter` is used. |
-| Figma | Brand tokens pending (PDR-002); placeholder token values keep the structure Figma-ready. |
+| Figma | Noshi Brand Library v1.0 colours, type, and radius applied. Status colours and some spacing steps remain open (PDR-002). |
 
 ## Foundation behaviour (engineering, not business)
 
@@ -69,7 +69,7 @@ These are delivered foundation mechanisms. They are not claims about how a resta
 | NFR | Target | Enforced by |
 |---|---|---|
 | Touch targets | Interactive elements ≥ 48dp (`AppTheme.sizes.minTouchTarget`); primary actions 56dp (`buttonLarge`) | Component APIs, previews, `review-change` skill |
-| Font scale | Layouts work at font scale 1.0, 1.5 and 2.0 without clipping or overlap | `@ComponentPreviews` / `@ScreenPreviews` include font scale 2.0 |
+| Font scale | Layouts are checked at normal font scale (1.0) | `@ComponentPreviews` / `@ScreenPreviews` use the default font scale |
 | Long and translated content | Names ellipsize, prices never truncate, addresses wrap to 3 lines, buttons and chips grow; verified with `en-XA` pseudo-locale | FR-FOUND-020, `PreviewData` long samples |
 | No duplicate submissions | A mutation cannot run twice for the same key while in flight | `BaseViewModel.launchSubmit`, `AppButton(loading)`, unit and UI tests |
 | Orientation | Landscape on sw600dp+ where the platform allows; tablet layouts still work in portrait and multi-window (Android 16) | `OrientationPolicy`, ADR-006 |

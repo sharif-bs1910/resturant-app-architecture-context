@@ -77,14 +77,14 @@ Non-secret values live in `config/env/{dev,staging,prod}.properties`. Secrets co
 - **Errors:** `presentError(error)` chooses a transient message or a dialog.
 - **Screens:** `XxxRoute` / `XxxScreen` split; Route owns ViewModel and effects; Screen is stateless with previews.
 - **Data:** repositories return `ApiResult<DomainModel>`; DTOs map to domain with `toDomain()`.
-- **Tokens:** colors, typography, spacing, radius, border and sizes only through `AppTheme.*`; placeholder values until Figma (PDR-002).
-- **Previews:** every component and screen file ends with previews for each variant and state, covering tablet landscape, tablet portrait and font scale 2.0.
+- **Tokens:** colors, typography, spacing, radius, border and sizes only through `AppTheme.*`. Noshi Brand Library v1.0 supplies mapped colours, Fraunces/Inter/JetBrains Mono, and radius MD/LG/XL. Status colours and some spacing steps remain open (PDR-002).
+- **Previews:** every component and screen file ends with previews for each variant and state, covering tablet landscape and tablet portrait at normal font scale.
 - **Long content:** names use `maxLines` + ellipsis; prices are never truncated; addresses wrap up to 3 lines; buttons and chips grow in height.
 
 ## Open decisions
 
 - **PDR-001** — Backend auth scheme; default: Bearer + refresh via `AuthProvider` with a placeholder endpoint.
-- **PDR-002** — Figma brand tokens; default: placeholder palette and system font.
+- **PDR-002** — Remaining brand tokens (status colours, extra spacing, pill buttons). Mapped Noshi v1.0 colours, type, and radius are already applied.
 - **PDR-003** — API base URLs per environment; default: `.invalid` placeholders in `config/env/*.properties`.
 - **PDR-004** — Firebase projects per environment; default: Firebase plugins skipped when `google-services.json` is absent.
 - **PDR-005** — detekt deferred until Kotlin ≥ 2.3; ktlint + Android lint active.
