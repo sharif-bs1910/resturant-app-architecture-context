@@ -7,7 +7,7 @@ Single entry point for project status, decisions and documents. Update this file
 - **Phase:** 6 — Development (Foundation)
 - **Sprint:** sprint-0
 - **Status:** Foundation complete
-- **Last updated:** 2026-10-02 (checkout UI is local-only: open orders, order builder, modifiers, tender, gift card, draft saved, delivery address, orders with modifier details, confirmation)
+- **Last updated:** 2026-10-05 (`statusDanger` `#8B3A1F` added for the Orders Refund and Cancel & refund buttons; other status colours stay open under PDR-002)
 
 ## Plan progress
 
@@ -47,7 +47,7 @@ Details and owners in [PENDING-DECISIONS.md](docs/03-context/PENDING-DECISIONS.m
 | ID | Decision | Default until decided |
 |---|---|---|
 | PDR-001 | Backend auth scheme | Bearer + refresh via `AuthProvider` with a placeholder endpoint |
-| PDR-002 | Remaining brand tokens (status colours, extra spacing, pill buttons) | Noshi v1.0 colours, type, and radius applied; status colours still placeholder |
+| PDR-002 | Remaining brand tokens (status colours, extra spacing, pill buttons) | Noshi v1.0 colours, type, and radius applied; `statusDanger` is `#8B3A1F`; other status colours still placeholder |
 | PDR-003 | API base URLs per environment | `https://api.dev.example.invalid/` style placeholders |
 | PDR-004 | Firebase projects per environment | Firebase plugins skipped when `google-services.json` is absent |
 | PDR-005 | detekt stability on Kotlin 2.2.10 | detekt 2.0.0-alpha.3; ktlint + Android lint only if it fails to run |
