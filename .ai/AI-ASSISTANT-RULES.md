@@ -8,7 +8,7 @@ Project-specific rules for every AI session. They add to the process rules in [`
 - Follow the MVVM contract: split every screen into a stateful `XxxRoute` and a stateless `XxxScreen`; expose an immutable `XxxUiState` with a `LoadState` for each independently loaded section; send one-off events as effects through `BaseViewModel`.
 - Use design tokens through `AppTheme.*` (`colors`, `typography`, `spacing`, `radius`, `border`, `sizes`).
 - Put every user-facing string in `res/values/strings.xml`.
-- Add `@Preview`s for every variant and state of every component and screen, covering tablet landscape, tablet portrait and font scale 2.0.
+- Add `@Preview`s for every variant and state of every component and screen, covering tablet landscape and tablet portrait at normal font scale.
 - Wrap network calls in `safeApiCall` and return `ApiResult` from repositories.
 - Use `launchSubmit` for every mutation, so duplicate taps are ignored while a request runs.
 - Register every endpoint in `docs/03-context/API-REGISTRY.md` with an `api:{domain}:{slug}` ID.

@@ -14,5 +14,5 @@ Confirmed product constraints for this phase: English only, light mode only, tab
 
 - All business features and flows (to be specified later).
 - Real backend integration (auth scheme, endpoints and base URLs: PDR-001, PDR-003).
-- Final brand visuals (placeholder tokens until PDR-002).
+- Status colours and a few spacing steps (PDR-002). Mapped Noshi v1.0 colours, type, and radius are applied.
 - Dark mode, other languages, multi-module Gradle structure, CI (team-managed).
