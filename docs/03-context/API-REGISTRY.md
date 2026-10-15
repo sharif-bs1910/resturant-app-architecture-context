@@ -29,3 +29,7 @@ Every backend endpoint the app calls is registered here before or in the same ch
 | ID | Method | Path | Auth | Request | Response | Errors | Status | Consumers |
 |---|---|---|---|---|---|---|---|---|
 | api:auth:refresh | POST | auth/refresh | none (X-No-Auth) | {refreshToken} | {accessToken, refreshToken} | 401 → session end | Placeholder (PDR-001) | TokenAuthenticator via RefreshTokenAuthProvider |
+| api:terminal:connection-token | POST | connection_token | none (X-No-Auth) | {} | {secret} | stub/network → AppError | Draft (dev stub; PDR-006) | TerminalTokenRepositoryImpl → AppConnectionTokenProvider |
+| api:terminal:create-payment-intent | POST | payment_intents | none (X-No-Auth) | {amountCents, currency} | {id, clientSecret} | stub/network → AppError | Draft (dev stub; PDR-006) | TerminalPaymentRepositoryImpl → TerminalHarnessViewModel |
+
+> Terminal stub paths are relative to `TERMINAL_STUB_BASE_URL` (not `API_BASE_URL`).

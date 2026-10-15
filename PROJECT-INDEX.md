@@ -7,7 +7,7 @@ Single entry point for project status, decisions and documents. Update this file
 - **Phase:** 6 — Development (Foundation)
 - **Sprint:** sprint-0
 - **Status:** Foundation complete
-- **Last updated:** 2026-10-05 (`statusDanger` `#8B3A1F` added for the Orders Refund and Cancel & refund buttons; other status colours stay open under PDR-002)
+- **Last updated:** 2026-10-15 (Stripe Terminal M2 developer HTML guide; Checkout Terminal wiring)
 
 ## Plan progress
 
@@ -39,6 +39,7 @@ Single entry point for project status, decisions and documents. Update this file
 | [ADR-004](docs/03-context/adr/ADR-004-networking-and-auth.md) | Networking and auth | Accepted |
 | [ADR-005](docs/03-context/adr/ADR-005-logging-and-crash-reporting.md) | Logging and crash reporting | Accepted |
 | [ADR-006](docs/03-context/adr/ADR-006-design-system-and-adaptive-layout.md) | Design system and adaptive layout | Accepted |
+| [ADR-007](docs/03-context/adr/ADR-007-stripe-terminal.md) | Stripe Terminal SDK (hybrid fake/real) | Accepted |
 
 ## Open decisions
 
@@ -51,6 +52,7 @@ Details and owners in [PENDING-DECISIONS.md](docs/03-context/PENDING-DECISIONS.m
 | PDR-003 | API base URLs per environment | `https://api.dev.example.invalid/` style placeholders |
 | PDR-004 | Firebase projects per environment | Firebase plugins skipped when `google-services.json` is absent |
 | PDR-005 | detekt stability on Kotlin 2.2.10 | detekt 2.0.0-alpha.3; ktlint + Android lint only if it fails to run |
+| PDR-006 | Production Stripe Terminal backend | Dev local stub; staging/prod Terminal off |
 
 ## Key documents
 
@@ -66,18 +68,19 @@ Details and owners in [PENDING-DECISIONS.md](docs/03-context/PENDING-DECISIONS.m
 - [README.md](README.md) — repo purpose and how to start a session
 - [PROJECT-CONTEXT.md](docs/00-project-context/PROJECT-CONTEXT.md) — Phase 0
 - [CONCEPT-NOTE.md](docs/01-concept/CONCEPT-NOTE.md) — Phase 1
-- [SPECIFICATION.md](docs/02-specification/SPECIFICATION.md) — Phase 2, `FR-FOUND-001`…`FR-FOUND-020`
+- [SPECIFICATION.md](docs/02-specification/SPECIFICATION.md) — Phase 2, `FR-FOUND-001`…`FR-FOUND-021`
 - [BUSINESS-TECH-CONTEXT.md](docs/03-context/BUSINESS-TECH-CONTEXT.md) — Phase 3
-- [PENDING-DECISIONS.md](docs/03-context/PENDING-DECISIONS.md) — PDR-001…PDR-005
+- [PENDING-DECISIONS.md](docs/03-context/PENDING-DECISIONS.md) — PDR-001…PDR-006
 - [API-REGISTRY.md](docs/03-context/API-REGISTRY.md) — `api:{domain}:{slug}` endpoints
 - [BRAND-GUIDELINES.md](docs/03-context/BRAND-GUIDELINES.md) — Noshi logo, color, type, components, and documentation rules
-- [ADRs](docs/03-context/adr/) — ADR-001…ADR-006
+- [ADRs](docs/03-context/adr/) — ADR-001…ADR-007
 
 **Breakdown and development**
 
 - [FOUND.md](docs/05-breakdown/modules/FOUND.md) — module overview, FR → ticket → code → test map
-- [sprint-0.md](docs/05-breakdown/sprints/sprint-0.md) — ticket board `FOUND-001`…`FOUND-020`
+- [sprint-0.md](docs/05-breakdown/sprints/sprint-0.md) — ticket board `FOUND-001`…`FOUND-021`
 - [TEST-CONTEXT.md](docs/06-development/TEST-CONTEXT.md) — Android test strategy and hook verification log
+- [Stripe Reader M2 — Developer Guide](docs/06-development/stripe-terminal-m2-developer-guide.html) — general M2 connection, simulated vs physical, payment flow, backend needs, go-live
 - [Impact analyses](docs/06-development/impact-analyses/README.md) — how to file `IA-YYYY-MM-DD-<topic>.md`
 
 **Templates and tools**
@@ -92,6 +95,9 @@ Details and owners in [PENDING-DECISIONS.md](docs/03-context/PENDING-DECISIONS.m
 - [Plan 1 — AI-DLC setup](docs/superpowers/plans/2026-09-24-01-ai-dlc-setup.md)
 - [Plan 2 — Android core foundation](docs/superpowers/plans/2026-09-24-02-android-core-foundation.md)
 - [Plan 3 — Design system and states](docs/superpowers/plans/2026-09-24-03-design-system-and-states.md)
+- [Design — Stripe Terminal M2](docs/superpowers/specs/2026-10-14-stripe-terminal-m2-design.md)
+- [Plan — Stripe Terminal M2](docs/superpowers/plans/2026-10-14-stripe-terminal-m2.md)
+- [IA — Stripe Terminal](docs/06-development/impact-analyses/IA-2026-10-14-stripe-terminal.md)
 
 **Workspace**
 

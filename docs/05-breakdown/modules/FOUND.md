@@ -4,10 +4,10 @@
 
 FOUND is the foundation module of Noshitech Restaurant. It delivers build environments, the MVVM contract, networking with auth and error handling, logging and crash reporting, adaptive tablet layout, design tokens, shared components and shared screen states. It contains no business features; the app launches to a blank home screen and components are verified through `@Preview`s and tests. Business domain and feature modules will be specified later.
 
-- Requirements: [SPECIFICATION.md](../../02-specification/SPECIFICATION.md) (`FR-FOUND-001`…`FR-FOUND-020`)
-- Tickets and status: [sprint-0.md](../sprints/sprint-0.md) (`FOUND-001`…`FOUND-020`)
+- Requirements: [SPECIFICATION.md](../../02-specification/SPECIFICATION.md) (`FR-FOUND-001`…`FR-FOUND-021`)
+- Tickets and status: [sprint-0.md](../sprints/sprint-0.md) (`FOUND-001`…`FOUND-021`)
 - Test cases: [TEST-CONTEXT.md](../../06-development/TEST-CONTEXT.md) (`FOUND-QA-NNN`)
-- Decisions: [ADR-001…ADR-006](../../03-context/adr/)
+- Decisions: [ADR-001…ADR-007](../../03-context/adr/)
 
 ## Traceability
 
@@ -41,3 +41,4 @@ Code paths and test names come from Plan 2 (Android core foundation) and Plan 3 
 | FR-FOUND-018 | FOUND-018 | `SRC/core/ui/state/ErrorState.kt` (`ServiceUnavailableState`), `SRC/core/ui/state/OfflineBlockingState.kt`, `SRC/core/ui/AppScaffold.kt` (`LocalIsOnline`), `SRC/core/network/NetworkMonitor.kt` | `OfflineBlockingTest` (FOUND-QA-007), `FakeNetworkMonitor`; previews |
 | FR-FOUND-019 | FOUND-019 | `SRC/core/ui/BaseViewModel.kt` (`launchSubmit`, `submittingKeys`, `isSubmitting`), `SRC/core/ui/UiEffect.kt`, `SRC/core/ui/ObserveEffects.kt`, `SRC/core/designsystem/component/button/AppButton.kt` (`loading`) | `BaseViewModelTest`, `AppButtonTest.loadingButtonIgnoresTaps` (FOUND-QA-005) |
 | FR-FOUND-020 | FOUND-020 | `SRC/core/designsystem/preview/PreviewData.kt`, `SRC/core/designsystem/preview/PreviewAnnotations.kt` (`@ComponentPreviews`, `@ScreenPreviews`), all component files, `app/build.gradle.kts` (`isPseudoLocalesEnabled` in debug) | Previews at normal font scale (1.0) with long samples; `en-XA` pseudo-locale check on device |
+| FR-FOUND-021 | FOUND-021 | `SRC/core/terminal/`, `SRC/core/terminal/stripe/`, `SRC/core/terminal/fake/`, `SRC/data/remote/api/TerminalStubApi.kt`, `SRC/data/repository/Terminal*RepositoryImpl.kt`, `SRC/feature/terminalharness/`, `SRC/feature/checkout/CheckoutViewModel.kt` (card collect → Terminal when enabled), `SRC/feature/checkout/CheckoutScreen.kt` (location before card collect), `SRC/di/TerminalModule.kt`, `tools/stripe-terminal-stub/`, `config/env/*.properties` (`TERMINAL_*`), manifest location/Bluetooth permissions | `TerminalRepositoriesTest`, `FakeTerminalClientTest`, `TerminalHarnessViewModelTest`, `CheckoutViewModelTest` (`card collect uses Stripe Terminal when enabled`); stub README curl checks |

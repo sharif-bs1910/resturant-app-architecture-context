@@ -6,7 +6,7 @@ Android test strategy for the code repo `../resturant-app`. This replaces the pl
 
 | Level | Location | Coverage |
 |---|---|---|
-| Unit | `app/src/test` | `ErrorMapper` (each status and exception → `AppError`, message sanitizing); `safeApiCall` rethrows cancellation; `TokenAuthenticator` (single refresh for parallel 401s via MockWebServer, session end on failure, at most one retry); currency and phone formatters and US phone/address validators; `BaseViewModel.launchSubmit` (ignores re-entry, releases the key on success, failure and cancellation) |
+| Unit | `app/src/test` | `ErrorMapper` (each status and exception → `AppError`, message sanitizing); `safeApiCall` rethrows cancellation; `TokenAuthenticator` (single refresh for parallel 401s via MockWebServer, session end on failure, at most one retry); currency and phone formatters and US phone/address validators; `BaseViewModel.launchSubmit` (ignores re-entry, releases the key on success, failure and cancellation); Stripe Terminal stub repositories (MockWebServer), `FakeTerminalClient`, `TerminalHarnessViewModel`, Checkout card-collect Terminal path (FOUND-021) |
 | ViewModel harness | `app/src/test` | `MainDispatcherRule` in `testing/`, fakes in `fakes/` (`FakeTokenStore`, `FakeAuthProvider`, `FakeTokenCipher`, `FakeCrashReporter`, `FakeNetworkMonitor`); `HomeViewModelTest` is the template used by the `scaffold-screen` skill |
 | Compose UI | `app/src/androidTest` | `QuantityStepper` bounds, `NumericKeypad` modes, `AppButton` loading blocks a second tap, `OfflineBlockingState` show and dismiss |
 | Hooks | `scripts/ai-hooks/tests/run-tests.sh` | Secrets and dangerous-command guard, session-start context, design lint, edit tracking and doc-sync reminder, for both Cursor and Claude Code payloads |

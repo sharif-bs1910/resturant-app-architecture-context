@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stripe Reader M2 — Developer Guide</title>
+  <style>
+    :root {
+      --bg: #f4f2ee;
+      --surface: #fff;
+      --ink: #141414;
+      --muted: #5a5a5a;
+      --line: #ddd8cf;
+      --teal: #0b6b5a;
+      --teal-deep: #084d42;
+      --teal-soft: #dff3ee;
+      --sand: #f3e9d8;
+      --sand-ink: #6a4e1f;
+      --sky: #e8eef6;
+      --sky-ink: #1f3d63;
+      --rose: #f8e8e6;
+      --rose-ink: #7a2e28;
+      --radius: 14px;
+      --shadow: 0 1px 2px rgba(0,0,0,.04), 0 12px 32px rgba(0,0,0,.06);
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font: 400 1.0625rem/1.65 "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+      background:
+        linear-gradient(180deg, #ebe7e0 0, transparent 220px),
+        var(--bg);
+    }
+
+    .page {
+      max-width: 52rem;
+      margin: 0 auto;
+      padding: 2.75rem 1.35rem 4.5rem;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 2rem 0 2.25rem;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 2rem;
+    }
+
+    .hero-kicker {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin: 0 0 0.85rem;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      margin: 0 0 0.85rem;
+      font-weight: 700;
+    }
+
+    .hero-lede {
+      margin: 0;
+      max-width: 38rem;
+      font-size: 1.2rem;
+      color: var(--muted);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.35rem;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .pill {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* TOC */
+    .toc {
+      display: grid;
+      gap: 0.55rem;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.35rem 1.5rem;
+      margin-bottom: 2.75rem;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .toc h2 {
+      margin: 0 0 0.35rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 0;
+      padding: 0;
+    }
+
+    .toc-grid {
+      display: grid;
+      gap: 0.35rem 1.5rem;
+    }
+
+    @media (min-width: 640px) {
+      .toc-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .toc a {
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 0.95rem;
+      padding: 0.25rem 0;
+      border-bottom: 1px solid transparent;
+    }
+
+    .toc a:hover {
+      color: var(--teal);
+      border-bottom-color: var(--teal);
+    }
+
+    /* Sections */
+    section {
+      margin-bottom: 3.25rem;
+      scroll-margin-top: 1.25rem;
+    }
+
+    h2 {
+      font-size: 1.55rem;
+      letter-spacing: -0.02em;
+      margin: 0 0 1rem;
+      padding-bottom: 0.55rem;
+      border-bottom: 3px solid var(--teal-soft);
+    }
+
+    h3 {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 1.02rem;
+      margin: 1.6rem 0 0.55rem;
+      letter-spacing: -0.01em;
+    }
+
+    p { margin: 0 0 1rem; }
+    ul, ol { margin: 0 0 1rem; padding-left: 1.3rem; }
+    li { margin: 0.4rem 0; }
+
+    .note {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      border-radius: var(--radius);
+      padding: 1rem 1.15rem;
+      margin: 1rem 0 1.35rem;
+      border: 1px solid transparent;
+    }
+
+    .note strong {
+      display: block;
+      margin-bottom: 0.2rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .note.teal { background: var(--teal-soft); border-color: #b7ddd3; color: var(--teal-deep); }
+    .note.sand { background: var(--sand); border-color: #e4d2ae; color: var(--sand-ink); }
+    .note.sky  { background: var(--sky); border-color: #c5d4e8; color: var(--sky-ink); }
+    .note.rose { background: var(--rose); border-color: #e8c4bf; color: var(--rose-ink); }
+
+    /* Visual flow boards */
+    .board {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.35rem 1.25rem 1.45rem;
+      margin: 1.15rem 0 1.5rem;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .board-title {
+      margin: 0 0 1rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .swim {
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .node {
+      display: grid;
+      grid-template-columns: 2.4rem 1fr;
+      gap: 0.85rem;
+      align-items: start;
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #fafaf8;
+      position: relative;
+    }
+
+    .node + .node::before {
+      content: "";
+      position: absolute;
+      left: 1.85rem;
+      top: -0.65rem;
+      width: 2px;
+      height: 0.65rem;
+      background: var(--teal);
+      opacity: 0.45;
+    }
+
+    .badge {
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      font-weight: 750;
+      font-size: 0.9rem;
+      color: #fff;
+      background: var(--teal);
+    }
+
+    .node h4 {
+      margin: 0.15rem 0 0.25rem;
+      font-size: 1rem;
+    }
+
+    .node p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    /* Horizontal actor diagram */
+    .actors {
+      display: grid;
+      gap: 0.55rem;
+      margin: 1rem 0 1.35rem;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    @media (min-width: 720px) {
+      .actors {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.65rem;
+      }
+    }
+
+    .actor {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1rem 0.9rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .actor .icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      margin: 0 auto 0.65rem;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-size: 1.15rem;
+      background: var(--teal-soft);
+      color: var(--teal-deep);
+      font-weight: 700;
+    }
+
+    .actor h4 {
+      margin: 0 0 0.35rem;
+      font-size: 0.95rem;
+    }
+
+    .actor p {
+      margin: 0;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .pipe {
+      display: none;
+    }
+
+    @media (min-width: 720px) {
+      .pipe-row {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+        align-items: center;
+        gap: 0.35rem;
+        margin: 0.25rem 0 1.5rem;
+        font-family: system-ui, -apple-system, sans-serif;
+      }
+      .pipe-row .actor { margin: 0; }
+      .pipe {
+        display: block;
+        color: var(--teal);
+        font-weight: 700;
+        font-size: 1.25rem;
+        text-align: center;
+      }
+    }
+
+    /* Two-column compare */
+    .split {
+      display: grid;
+      gap: 1rem;
+      margin: 1.15rem 0 1.4rem;
+    }
+
+    @media (min-width: 700px) {
+      .split { grid-template-columns: 1fr 1fr; }
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.25rem;
+      box-shadow: var(--shadow);
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .panel h3 {
+      margin: 0 0 0.65rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      background: var(--teal-soft);
+      color: var(--teal-deep);
+    }
+
+    .tag.alt {
+      background: var(--sky);
+      color: var(--sky-ink);
+    }
+
+    .panel ul { margin-bottom: 0; padding-left: 1.1rem; }
+    .panel li { font-size: 0.92rem; color: var(--muted); }
+
+    /* Sequence / E2E visual */
+    .seq {
+      display: grid;
+      gap: 0;
+      margin: 1.15rem 0 1.5rem;
+      font-family: system-ui, -apple-system, sans-serif;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .seq-row {
+      display: grid;
+      grid-template-columns: 7.5rem 1fr;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    .seq-row:last-child { border-bottom: 0; }
+
+    .seq-who {
+      padding: 0.85rem 0.9rem;
+      background: #f7f5f1;
+      font-size: 0.78rem;
+      font-weight: 750;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--teal-deep);
+      display: flex;
+      align-items: center;
+      border-right: 1px solid var(--line);
+    }
+
+    .seq-what {
+      padding: 0.85rem 1rem;
+      font-size: 0.94rem;
+      color: var(--ink);
+    }
+
+    .seq-what span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.84rem;
+      margin-top: 0.2rem;
+    }
+
+    /* Backend need cards */
+    .needs {
+      display: grid;
+      gap: 0.85rem;
+      margin: 1rem 0 1.35rem;
+    }
+
+    .need {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.2rem;
+      box-shadow: var(--shadow);
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .need-num {
+      font-size: 1.6rem;
+      font-weight: 750;
+      color: var(--teal);
+      line-height: 1;
+      min-width: 1.6rem;
+    }
+
+    .need h4 { margin: 0 0 0.3rem; font-size: 1rem; }
+    .need p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+
+    /* Checklist */
+    .check-grid {
+      display: grid;
+      gap: 0.55rem;
+      margin: 1rem 0;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .check {
+      display: grid;
+      grid-template-columns: 1.4rem 1fr;
+      gap: 0.75rem;
+      align-items: start;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0.8rem 1rem;
+    }
+
+    .box {
+      width: 1.15rem;
+      height: 1.15rem;
+      margin-top: 0.15rem;
+      border: 2px solid var(--teal);
+      border-radius: 4px;
+      background: #fff;
+    }
+
+    .check strong {
+      display: block;
+      font-size: 0.95rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .check span {
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.4;
+    }
+
+    .phase {
+      margin: 1.5rem 0 0.65rem;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 750;
+      color: var(--teal);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 1rem 0 1.35rem;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 0.92rem;
+      box-shadow: var(--shadow);
+    }
+
+    th, td {
+      text-align: left;
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--teal-soft);
+      color: var(--teal-deep);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    footer {
+      margin-top: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <p class="hero-kicker">Stripe Terminal · Reader M2</p>
+      <h1>Developer guide for connecting and taking payments</h1>
+      <p class="hero-lede">
+        How to set up Reader M2 in Stripe test mode, connect with a simulated or physical reader,
+        run an end-to-end card-present payment, and what your backend team must own before go-live.
+      </p>
+      <div class="pill-row">
+        <span class="pill">Mobile app + Stripe Terminal SDK</span>
+        <span class="pill">Simulated &amp; physical M2</span>
+        <span class="pill">Backend-required secrets</span>
+        <span class="pill">Sandbox → production</span>
+      </div>
+    </header>
+
+    <nav class="toc" aria-label="Contents">
+      <h2>On this page</h2>
+      <div class="toc-grid">
+        <a href="#overview">1. Big picture</a>
+        <a href="#sandbox">2. Stripe sandbox setup</a>
+        <a href="#connect">3. Connection setup flow</a>
+        <a href="#simulated-vs-real">4. Simulated vs real M2</a>
+        <a href="#payment">5. End-to-end payment flow</a>
+        <a href="#backend">6. What backend must provide</a>
+        <a href="#golive">7. Go-live readiness</a>
+      </div>
+    </nav>
+
+    <main>
+      <!-- 1 -->
+      <section id="overview">
+        <h2>1. Big picture</h2>
+        <p>
+          Stripe Reader M2 is a Bluetooth / USB card reader for in-person payments.
+          Your mobile app does <strong>not</strong> collect typed card numbers.
+          The reader (or Stripe’s simulator) captures the card; Stripe processes it;
+          your backend authorizes and creates the charge using a secret key that must never live in the app.
+        </p>
+
+        <div class="pipe-row" aria-hidden="true">
+          <div class="actor">
+            <div class="icon">1</div>
+            <h4>Staff app</h4>
+            <p>Discover, connect, start pay</p>
+          </div>
+          <div class="pipe">→</div>
+          <div class="actor">
+            <div class="icon">2</div>
+            <h4>Your backend</h4>
+            <p>Tokens &amp; PaymentIntents</p>
+          </div>
+          <div class="pipe">→</div>
+          <div class="actor">
+            <div class="icon">3</div>
+            <h4>Stripe</h4>
+            <p>Terminal + Payments APIs</p>
+          </div>
+          <div class="pipe">→</div>
+          <div class="actor">
+            <div class="icon">4</div>
+            <h4>Reader M2</h4>
+            <p>Tap / insert / swipe</p>
+          </div>
+        </div>
+
+        <div class="actors">
+          <div class="actor">
+            <div class="icon">A</div>
+            <h4>App</h4>
+            <p>UI, permissions, Stripe Terminal SDK on device</p>
+          </div>
+          <div class="actor">
+            <div class="icon">B</div>
+            <h4>Backend</h4>
+            <p>Secret key, connection token, create payment</p>
+          </div>
+          <div class="actor">
+            <div class="icon">C</div>
+            <h4>Stripe Dashboard</h4>
+            <p>Locations, readers, keys, payment history</p>
+          </div>
+          <div class="actor">
+            <div class="icon">D</div>
+            <h4>Reader</h4>
+            <p>Simulated (test) or physical M2</p>
+          </div>
+        </div>
+
+        <div class="note rose">
+          <strong>Hard rule</strong>
+          The Stripe secret key never ships inside a mobile app.
+          Only a trusted server creates connection tokens and payment intents.
+        </div>
+      </section>
+
+      <!-- 2 -->
+      <section id="sandbox">
+        <h2>2. Stripe sandbox setup</h2>
+        <p>
+          Do all early development in <strong>Test mode</strong>. Live keys and live readers come later.
+        </p>
+
+        <div class="board">
+          <p class="board-title">Sandbox checklist</p>
+          <div class="swim">
+            <div class="node">
+              <div class="badge">1</div>
+              <div>
+                <h4>Switch Dashboard to Test mode</h4>
+                <p>Confirm the Dashboard banner / toggle shows Test (sandbox), not Live.</p>
+              </div>
+            </div>
+            <div class="node">
+              <div class="badge">2</div>
+              <div>
+                <h4>Create a Terminal location</h4>
+                <p>
+                  Terminal → Locations → create a location (store / venue).
+                  Note the location id — readers connect against a location.
+                </p>
+              </div>
+            </div>
+            <div class="node">
+              <div class="badge">3</div>
+              <div>
+                <h4>Prepare API keys</h4>
+                <p>
+                  Create or copy a <strong>test secret key</strong> for backend / local server use only.
+                  Publishable keys alone are not enough for Terminal connection tokens.
+                </p>
+              </div>
+            </div>
+            <div class="node">
+              <div class="badge">4</div>
+              <div>
+                <h4>Choose your reader path</h4>
+                <p>
+                  Simulated reader for day-to-day software work, or register a physical M2 to the same location when hardware is available.
+                </p>
+              </div>
+            </div>
+            <div class="node">
+              <div class="badge">5</div>
+              <div>
+                <h4>Verify payments appear</h4>
+                <p>
+                  After a successful test collect, confirm the payment shows in the Dashboard under Payments / Terminal activity.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- 3 -->
+      <section id="connect">
+        <h2>3. Connection setup flow</h2>
+        <p>
+          Connecting a reader is separate from charging a card. Get connection solid first,
+          then run payments.
+        </p>
+
+        <div class="board">
+          <p class="board-title">Reader connection flow</p>
+          <div class="swim">
+            <div class="node">
+              <div class="badge">1</div>
+              <div>
+                <h4>Grant device permissions</h4>
+                <p>
+                  Location is required by Stripe Terminal.
+                  Bluetooth (and related runtime permissions) are required for a physical M2 over Bluetooth.
+                </p>
+              </div>
+            </div>
+            <div class="node">
+              <div class="badge">2</div>
+              <div>
+                <h4>Fetch a connection token from your backend</h4>
+                <p>
+                  The app asks your server for a short-lived Terminal connection token.
+                  The SDK uses that token to talk to Stripe — the app never invents one.
+                </p>
+              </div>
+            </div>
+            <div class="node">
+              <div class="badge">3</div>
+              <div>
+                <h4>Initialize Stripe Terminal on the device</h4>
+                <p>Start the Terminal SDK once the token provider is wired and the app is ready.</p>
+              </div>
+            </div>
+            <div class="node">
+              <div class="badge">4</div>
+              <div>
+                <h4>Discover readers</h4>
+                <p>
+                  Scan for available readers.
+                  Use simulated discovery in test mode without hardware, or Bluetooth / USB discovery for a real M2.
+                </p>
+              </div>
+            </div>
+            <div class="node">
+              <div class="badge">5</div>
+              <div>
+                <h4>Select a reader</h4>
+                <p>If more than one appears, staff (or your test UI) chooses which reader to use.</p>
+              </div>
+            </div>
+            <div class="node">
+              <div class="badge">6</div>
+              <div>
+                <h4>Connect to a Terminal location</h4>
+                <p>
+                  Connect the chosen reader to your Stripe Terminal location.
+                  A connected reader is ready to collect payments.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="note teal">
+          <strong>Healthy connection</strong>
+          You should see the reader listed under the location in the Stripe Dashboard
+          (simulated readers update “last seen”; physical readers show when online / recently seen).
+        </div>
+      </section>
+
+      <!-- 4 -->
+      <section id="simulated-vs-real">
+        <h2>4. Simulated vs real Reader M2</h2>
+
+        <div class="split">
+          <div class="panel">
+            <h3><span class="tag">Test mode</span> Simulated reader</h3>
+            <ul>
+              <li>No hardware on the desk</li>
+              <li>Stripe invents a virtual reader for the location</li>
+              <li>Best for CI, day-to-day app work, and demos</li>
+              <li>Still needs backend connection tokens &amp; PaymentIntents</li>
+              <li>Still needs location permission on the device</li>
+              <li>Card presentment is simulated by Stripe</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h3><span class="tag alt">Hardware</span> Physical Reader M2</h3>
+            <ul>
+              <li>Register the M2 to your Terminal location in Stripe</li>
+              <li>Power on, charge, enable Bluetooth (or use USB)</li>
+              <li>Grant location + Bluetooth permissions</li>
+              <li>Discover with simulated mode off</li>
+              <li>Customer taps, inserts, or swipes a real / test card per Stripe guidance</li>
+              <li>Same app payment APIs as simulated — only discovery / transport differ</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="board">
+          <p class="board-title">Physical M2 first-time setup</p>
+          <div class="swim">
+            <div class="node">
+              <div class="badge">1</div>
+              <div>
+                <h4>Register the reader in Stripe</h4>
+                <p>Use Stripe’s register-reader flow so the M2 belongs to your Terminal location.</p>
+              </div>
+            </div>
+            <div class="node">
+              <div class="badge">2</div>
+              <div>
+                <h4>Prepare the tablet</h4>
+                <p>Bluetooth on, location allowed, app built with Terminal enabled for that environment.</p>
+              </div>
+            </div>
+            <div class="node">
+              <div class="badge">3</div>
+              <div>
+                <h4>Discover → Connect</h4>
+                <p>Find the M2, connect it, confirm connected state in the app and Dashboard.</p>
+              </div>
+            </div>
+            <div class="node">
+              <div class="badge">4</div>
+              <div>
+                <h4>Run a small test payment</h4>
+                <p>Prove collect works on hardware before wiring it into your full POS journey.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5 -->
+      <section id="payment">
+        <h2>5. End-to-end payment flow</h2>
+        <p>
+          Once a reader is connected, payment is a handoff between your app, your backend, Stripe, and the reader.
+        </p>
+
+        <div class="seq" role="img" aria-label="Sequence of end-to-end payment steps">
+          <div class="seq-row">
+            <div class="seq-who">Staff</div>
+            <div class="seq-what">
+              Starts “Collect payment” for an amount (or an order / bill).
+              <span>App already has a connected reader (or connects first).</span>
+            </div>
+          </div>
+          <div class="seq-row">
+            <div class="seq-who">App</div>
+            <div class="seq-what">
+              Requests a card-present PaymentIntent from your backend.
+              <span>Sends amount / currency / order reference as your contract defines.</span>
+            </div>
+          </div>
+          <div class="seq-row">
+            <div class="seq-who">Backend</div>
+            <div class="seq-what">
+              Creates a Stripe PaymentIntent with card-present methods using the secret key.
+              <span>Returns payment id + client secret to the app. Never returns the secret API key.</span>
+            </div>
+          </div>
+          <div class="seq-row">
+            <div class="seq-who">App + SDK</div>
+            <div class="seq-what">
+              Hands the client secret to Stripe Terminal to collect and confirm on the reader.
+              <span>No PAN / CVV is typed into your UI for this path.</span>
+            </div>
+          </div>
+          <div class="seq-row">
+            <div class="seq-who">Reader</div>
+            <div class="seq-what">
+              Customer presents the card (or simulator completes in test mode).
+              <span>Card data stays in Stripe’s reader / payment stack.</span>
+            </div>
+          </div>
+          <div class="seq-row">
+            <div class="seq-who">Stripe</div>
+            <div class="seq-what">
+              Authorizes / captures per your PaymentIntent settings.
+              <span>Optionally notifies your backend via webhooks.</span>
+            </div>
+          </div>
+          <div class="seq-row">
+            <div class="seq-who">App</div>
+            <div class="seq-what">
+              Receives succeeded, declined, or canceled.
+              <span>Update UI; treat webhook + server state as source of truth when available.</span>
+            </div>
+          </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Outcome</th>
+              <th>What it means</th>
+              <th>Typical next step</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Succeeded</td>
+              <td>Card present payment completed</td>
+              <td>Mark order paid; print / receipt flows</td>
+            </tr>
+            <tr>
+              <td>Declined</td>
+              <td>Issuer or Stripe refused the charge</td>
+              <td>Show clear message; allow retry or other tender</td>
+            </tr>
+            <tr>
+              <td>Canceled</td>
+              <td>Staff or system aborted collect</td>
+              <td>Return to amount / tender selection</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </section>
+
+      <!-- 6 -->
+      <section id="backend">
+        <h2>6. What we need from backend teams</h2>
+        <p>
+          Mobile can discover and drive the reader. Backend owns trust, money creation, and durable order state.
+        </p>
+
+        <div class="needs">
+          <div class="need">
+            <div class="need-num">01</div>
+            <div>
+              <h4>Connection token endpoint</h4>
+              <p>
+                Authenticated API that creates a Stripe Terminal connection token and returns only the token secret to the app.
+                Called often; must be fast and locked to authorized devices / users.
+              </p>
+            </div>
+          </div>
+          <div class="need">
+            <div class="need-num">02</div>
+            <div>
+              <h4>Create card-present PaymentIntent</h4>
+              <p>
+                Authenticated API that creates a PaymentIntent suitable for in-person collection and returns id + client secret.
+                Prefer deriving amount from a known order / bill when your domain has one.
+              </p>
+            </div>
+          </div>
+          <div class="need">
+            <div class="need-num">03</div>
+            <div>
+              <h4>Auth &amp; tenancy</h4>
+              <p>
+                Only signed-in or paired devices for a given merchant / store may create tokens and charges.
+                Map store → Stripe Terminal location server-side.
+              </p>
+            </div>
+          </div>
+          <div class="need">
+            <div class="need-num">04</div>
+            <div>
+              <h4>Idempotency</h4>
+              <p>
+                Retries from flaky networks must not create duplicate charges. Use Stripe idempotency keys keyed to the business operation.
+              </p>
+            </div>
+          </div>
+          <div class="need">
+            <div class="need-num">05</div>
+            <div>
+              <h4>Webhooks</h4>
+              <p>
+                Listen for payment succeeded / failed (and related events) so order paid state survives app crashes after collect.
+              </p>
+            </div>
+          </div>
+          <div class="need">
+            <div class="need-num">06</div>
+            <div>
+              <h4>Post-payment operations</h4>
+              <p>
+                Refunds, tip adjustment, capture strategy (automatic vs manual) — owned by backend and product policy, not ad-hoc in the client.
+              </p>
+            </div>
+          </div>
+          <div class="need">
+            <div class="need-num">07</div>
+            <div>
+              <h4>Secrets &amp; environments</h4>
+              <p>
+                Test vs live Stripe keys per environment in a secrets manager.
+                Never expose secret keys to mobile config files.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="note teal">
+          <strong>Out of scope for backend</strong>
+          Bluetooth discovery, USB pairing UX, and prompting the customer on the reader stay on the mobile Stripe Terminal SDK.
+        </div>
+      </section>
+
+      <!-- 7 -->
+      <section id="golive">
+        <h2>7. Go-live readiness</h2>
+
+        <p class="phase">Phase A — Sandbox software ready</p>
+        <div class="check-grid">
+          <div class="check">
+            <div class="box" aria-hidden="true"></div>
+            <div>
+              <strong>Test location exists</strong>
+              <span>Terminal location created; app/backend agree on which location to use.</span>
+            </div>
+          </div>
+          <div class="check">
+            <div class="box" aria-hidden="true"></div>
+            <div>
+              <strong>Backend token + PaymentIntent APIs work in test</strong>
+              <span>App can initialize Terminal and create charges without embedding secrets.</span>
+            </div>
+          </div>
+          <div class="check">
+            <div class="box" aria-hidden="true"></div>
+            <div>
+              <strong>Simulated discover → connect → pay succeeds</strong>
+              <span>Full path proven without hardware.</span>
+            </div>
+          </div>
+          <div class="check">
+            <div class="box" aria-hidden="true"></div>
+            <div>
+              <strong>Dashboard shows test payments</strong>
+              <span>Ops can reconcile a successful collect in Stripe.</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="phase">Phase B — Hardware ready</p>
+        <div class="check-grid">
+          <div class="check">
+            <div class="box" aria-hidden="true"></div>
+            <div>
+              <strong>M2 registered to the correct location</strong>
+              <span>Reader appears under the intended Terminal location.</span>
+            </div>
+          </div>
+          <div class="check">
+            <div class="box" aria-hidden="true"></div>
+            <div>
+              <strong>Permissions UX verified on target tablets</strong>
+              <span>Location + Bluetooth prompts are clear; denial paths are handled.</span>
+            </div>
+          </div>
+          <div class="check">
+            <div class="box" aria-hidden="true"></div>
+            <div>
+              <strong>Physical discover → connect → pay succeeds</strong>
+              <span>At least one pilot device + one M2 pair validated on-site Wi‑Fi / RF conditions.</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="phase">Phase C — Production ready</p>
+        <div class="check-grid">
+          <div class="check">
+            <div class="box" aria-hidden="true"></div>
+            <div>
+              <strong>Live Stripe account &amp; live keys locked down</strong>
+              <span>Secrets only on servers; key rotation playbook exists.</span>
+            </div>
+          </div>
+          <div class="check">
+            <div class="box" aria-hidden="true"></div>
+            <div>
+              <strong>Auth, tenancy, idempotency, webhooks shipped</strong>
+              <span>Order paid state is trustworthy under retries and offline blips.</span>
+            </div>
+          </div>
+          <div class="check">
+            <div class="box" aria-hidden="true"></div>
+            <div>
+              <strong>Refund / tip / capture policy implemented</strong>
+              <span>Support and ops know how to reverse or adjust a payment.</span>
+            </div>
+          </div>
+          <div class="check">
+            <div class="box" aria-hidden="true"></div>
+            <div>
+              <strong>Monitoring &amp; support runbook</strong>
+              <span>Failed connects, declines, and webhook gaps have owners and playbooks.</span>
+            </div>
+          </div>
+          <div class="check">
+            <div class="box" aria-hidden="true"></div>
+            <div>
+              <strong>Pilot store sign-off</strong>
+              <span>One real location completes training and a supervised live transaction.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      General Stripe Reader M2 developer guide — connection, simulated vs physical, payment flow, backend responsibilities, and go-live readiness.
+      Align implementation details with current Stripe Terminal docs for your platform (Android / iOS) when coding.
+    </footer>
+  </div>
+</body>
+</html>

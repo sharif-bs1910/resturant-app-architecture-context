@@ -11,6 +11,7 @@ Owners are roles, not people (see [PROJECT-CONTEXT.md](../00-project-context/PRO
 | PDR-003 | API base URLs per environment | `https://api.dev.example.invalid/` style placeholders in `config/env/*.properties` | Backend lead | Before the first real API integration |
 | PDR-004 | Firebase projects per environment (dev, staging, prod) | Google Services and Crashlytics plugins skipped when `app/src/<flavor>/google-services.json` is absent; `NoOpCrashReporter` used | Dev lead + Product owner | Before the first staging build handed to testers |
 | PDR-005 | detekt stability on Kotlin 2.2.10 | detekt `dev.detekt` 2.0.0-alpha.3 (pre-release); if it fails to run, remove the plugin and keep ktlint + Android lint only until the Kotlin upgrade | Architect + Dev lead | End of Plan 2 (static-analysis verification) |
+| PDR-006 | Production Stripe Terminal backend: auth, connection-token and PaymentIntent contracts replacing the local stub | Dev uses `tools/stripe-terminal-stub` + `TERMINAL_STUB_BASE_URL`; staging/prod keep `TERMINAL_ENABLED=false` until a real backend exists | Backend lead + Architect | Before staging/prod card-present payments |
 
 ## Outcomes
 

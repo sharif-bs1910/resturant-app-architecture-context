@@ -22,7 +22,7 @@ Phase 6 — Development (Foundation), sprint 0. Scope is the 20 foundation tasks
 | Area | Choice |
 |---|---|
 | Build | AGP 9.0.1 (built-in Kotlin), Kotlin 2.2.10, KSP, Gradle wrapper 9.2.1, JDK 21 |
-| SDK | minSdk 25, targetSdk 36, compileSdk 36 |
+| SDK | minSdk 26, targetSdk 36, compileSdk 36 |
 | UI | Compose BOM 2025.07.00, Material3, core-splashscreen, activity-compose, lifecycle-runtime-compose; adaptive layout via own `AdaptiveInfo` + `WidthClass` (no window-size-class or adaptive libraries) |
 | DI | Hilt 2.56, hilt-navigation-compose |
 | Navigation | Navigation Compose 2.8.5, type-safe `@Serializable` routes |

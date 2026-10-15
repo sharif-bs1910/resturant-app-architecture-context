@@ -33,6 +33,7 @@
 | FOUND-018 | Service-unavailable and blocking offline states | FR-FOUND-018 | Done | Plan 3 Task 8; Plan 2 Task 6 |
 | FOUND-019 | Prevent duplicate submissions while requests run | FR-FOUND-019 | Done | Plan 2 Task 7; Plan 3 Tasks 2, 10 |
 | FOUND-020 | Long names, addresses, prices, translated content without layout breakage | FR-FOUND-020 | Done | Plan 3 Tasks 2–8; Plan 2 Task 1 (pseudo-locale) |
+| FOUND-021 | Stripe Terminal (Reader M2) core, stub, harness, tests | FR-FOUND-021 | Done | [Plan 2026-10-14](../../superpowers/plans/2026-10-14-stripe-terminal-m2.md) |
 
 ## Notes
 
